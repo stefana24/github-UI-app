@@ -1,7 +1,10 @@
-import FilterUsers from "./components/filterUsers";
-
+import Homepage from "./components/pages/HomePage";
 function App() {
-  return <FilterUsers />;
+  return (
+    <div>
+      <Homepage />
+    </div>
+  );
 }
 
 export default App;
