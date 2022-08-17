@@ -1,26 +1,25 @@
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import { useEffect } from "react";
-import UserComponent from "./pages/UserComponent";
-import { setUser } from "../redux/actions/userAction";
+import { fetchUsers } from "../features/reducers/fetchUsers";
+
 const UsersListing = () => {
-  const users = useSelector((state) => state);
+  const user = useSelector((state) => state);
   const dispatch = useDispatch();
-  const fetchUsers = async () => {
-    const response = await axios
-      .get("https://api.github.com/users")
-      .catch((err) => {
-        console.log("Err: ", err);
-      });
-    dispatch(setUser(response.data));
-  };
+
   useEffect(() => {
-    fetchUsers();
+    dispatch(fetchUsers());
   }, []);
-  console.log("Users:", users);
   return (
     <div>
-      <UserComponent />
+      {user.loading && <div>Loading..</div>}
+      {!user.loading && user.error ? <div>Error:{user.error}</div> : null}
+      {
+        <ul>
+          {user.users.map((element) => (
+            <li key={element.id}>{element.login}</li>
+          ))}
+        </ul>
+      }
     </div>
   );
 };
