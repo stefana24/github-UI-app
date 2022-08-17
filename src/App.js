@@ -1,5 +1,7 @@
+import FilterUsers from "./components/filterUsers";
+
 function App() {
-  return <div></div>;
+  return <FilterUsers />;
 }
 
 export default App;
