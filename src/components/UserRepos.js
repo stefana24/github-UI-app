@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import fetchUserRepo from "../features/reducers/fetchUserRepo";
+import { Box, List, ListItem } from "@mui/material";
 const UserRepos = () => {
   const user = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -11,15 +12,20 @@ const UserRepos = () => {
 
   console.log(user);
   return (
-    <div>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       {
-        <ul>
+        <List>
           {user.users.map((element) => (
-            <li key={element.id}>{element.name}</li>
+            <ListItem key={element.id}>{element.name}</ListItem>
           ))}
-        </ul>
+        </List>
       }
-    </div>
+    </Box>
   );
 };
 
