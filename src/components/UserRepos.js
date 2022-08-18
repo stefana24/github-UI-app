@@ -1,8 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import fetchUserRepo from "../features/reducers/fetchUserRepo";
+
 import { changeFilterInput } from "../features/data/usersSlice.js";
 import { getFilteredRepos } from "../features/selectors/filterRepos";
+
+import { Box, List, ListItem } from "@mui/material";
 
 const UserRepos = () => {
   const { filterInput, inputValue } = useSelector((state) => state);
@@ -15,20 +18,25 @@ const UserRepos = () => {
   }, []);
 
   return (
-    <div>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <input
         type="text"
         onChange={(e) => dispatch(changeFilterInput(e.target.value))}
         defaultValue={filterInput}
       />
       {
-        <ul>
+        <List>
           {repositories.map((element) => (
-            <li key={element.id}>{element.name}</li>
+            <ListItem key={element.id}>{element.name}</ListItem>
           ))}
-        </ul>
+        </List>
       }
-    </div>
+    </Box>
   );
 };
 

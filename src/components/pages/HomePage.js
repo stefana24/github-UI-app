@@ -1,14 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { changeInputValue } from "../../features/data/usersSlice.js";
-
+import Button from "@mui/material/Button";
+import Input from "@mui/material/Input";
+import { Box } from "@mui/material";
+import Image from "../../images/GitHub.jpg";
 const Homepage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userInput = useSelector((state) => state);
 
   const handleChange = (event) => {
-    console.log(event.target.value);
     dispatch(changeInputValue(event.target.value));
   };
 
@@ -16,18 +18,30 @@ const Homepage = () => {
     navigate(`/${userInput.inputValue}`);
   };
 
-  console.log(userInput);
+  const ariaLabel = { "aria-label": "description" };
   return (
-    <div>
-      <div>Github UI app</div>
-      <input
+    <Box
+      sx={{
+        marginTop: 5,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <img src={Image} alt="github" />
+      <Input
+        sx={{ textAlign: "center", marginBottom: 5 }}
         type="text"
         name="username"
         onChange={handleChange}
         value={userInput.inputValue}
+        placeholder="Enter username"
+        inputProps={ariaLabel}
       />
-      <button onClick={navigateToUserPage}>Search</button>
-    </div>
+      <Button onClick={navigateToUserPage} variant="outlined">
+        Search
+      </Button>
+    </Box>
   );
 };
 
