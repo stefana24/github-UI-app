@@ -11,6 +11,7 @@ export const usersSlice = createSlice({
     users: [],
     error: "",
     filterInput: "",
+    //repoFiles: []
   },
   reducers: {
     changeInputValue(state, action) {
@@ -38,6 +39,7 @@ export const usersSlice = createSlice({
     builder.addCase(fetchUserRepo.fulfilled, (state, action) => {
       state.userRepos = action.payload;
     });
+    //
   },
 });
 
