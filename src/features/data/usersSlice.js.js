@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchUsers } from "../reducers/fetchUsers";
 import fetchUserRepo from "../reducers/fetchUserRepo";
+import fetchRepoFiles from "../reducers/fetchRepoFiles";
 
 export const usersSlice = createSlice({
   name: "user",
@@ -11,7 +12,7 @@ export const usersSlice = createSlice({
     users: [],
     error: "",
     filterInput: "",
-    //repoFiles: []
+    repoFiles: { loading: false, repoContent: [] },
   },
   reducers: {
     changeInputValue(state, action) {
@@ -39,7 +40,13 @@ export const usersSlice = createSlice({
     builder.addCase(fetchUserRepo.fulfilled, (state, action) => {
       state.userRepos = action.payload;
     });
-    //
+    builder.addCase(fetchRepoFiles.pending, (state) => {
+      state.repoFiles.loading = true;
+    });
+    builder.addCase(fetchRepoFiles.fulfilled, (state, action) => {
+      state.repoFiles.repoContent = action.payload;
+      state.repoFiles.loading = false;
+    });
   },
 });
 
