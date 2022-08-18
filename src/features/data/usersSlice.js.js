@@ -10,10 +10,14 @@ export const usersSlice = createSlice({
     loading: false,
     users: [],
     error: "",
+    filterInput: "",
   },
   reducers: {
     changeInputValue(state, action) {
       state.inputValue = action.payload;
+    },
+    changeFilterInput(state, action) {
+      state.filterInput = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -32,11 +36,11 @@ export const usersSlice = createSlice({
     });
 
     builder.addCase(fetchUserRepo.fulfilled, (state, action) => {
-      state.users = action.payload;
+      state.userRepos = action.payload;
     });
   },
 });
 
 export default usersSlice.reducer;
 
-export const { changeInputValue } = usersSlice.actions;
+export const { changeInputValue, changeFilterInput } = usersSlice.actions;
