@@ -5,11 +5,19 @@ import fetchUserRepo from "../reducers/fetchUserRepo";
 export const usersSlice = createSlice({
   name: "user",
   initialState: {
-    userRepos: [],
+    userRepos: {
+      loading: false,
+      error: "",
+      userReposContent: [],
+    },
     inputValue: "",
-    loading: false,
-    users: [],
-    error: "",
+    users: [
+      {
+        loading: false,
+        error: "",
+        usersContent: [],
+      },
+    ],
     filterInput: "",
   },
   reducers: {
@@ -22,21 +30,23 @@ export const usersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchUsers.pending, (state) => {
-      state.loading = true;
+      state.users.loading = true;
     });
     builder.addCase(fetchUsers.fulfilled, (state, action) => {
-      state.loading = false;
-      state.users = action.payload;
-      state.error = "";
+      state.users.loading = false;
+      state.users.usersContent = action.payload;
+      state.users.error = "";
     });
     builder.addCase(fetchUsers.rejected, (state, action) => {
-      state.loading = false;
-      state.users = [];
-      state.error = action.error.message;
+      state.users.loading = false;
+      state.users.usersContent = [];
+      state.users.error = action.error.message;
     });
 
     builder.addCase(fetchUserRepo.fulfilled, (state, action) => {
-      state.userRepos = action.payload;
+      state.userRepos.userReposContent = action.payload.map(({ id, name }) => {
+        return { id, name };
+      });
     });
   },
 });
