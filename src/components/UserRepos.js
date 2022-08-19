@@ -40,7 +40,7 @@ const UserRepos = () => {
                 dispatch(
                   fetchRepoFiles({ inputValue, repoName: element.name })
                 );
-                navigate(`/repoFiles?name=${element.name}`); /*?name=${element.name}*/
+                navigate(`/repoFiles?name=${element.name}`);
               }}
               key={element.id}
             >
