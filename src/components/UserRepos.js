@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import fetchUserRepo from "../features/reducers/fetchUserRepo";
+import fetchRepoFiles from "../features/reducers/fetchRepoFiles";
 
 import { changeFilterInput } from "../features/data/usersSlice.js";
 import { getFilteredRepos } from "../features/selectors/filterRepos";
@@ -12,6 +14,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { makeStyles } from "@mui/styles";
 
 const UserRepos = () => {
+  const navigate = useNavigate();
   const { filterInput, inputValue } = useSelector((state) => state);
   const dispatch = useDispatch();
   const repositories = useSelector((state) =>
@@ -57,7 +60,14 @@ const UserRepos = () => {
   function ItemStyled({ props }) {
     const classes = useStyles();
     return (
-      <ListItem className={classes.card} key={props.id}>
+      <ListItem
+        className={classes.card}
+        key={props.id}
+        onClick={() => {
+          dispatch(fetchRepoFiles({ inputValue, repoName: props.name }));
+          navigate(`/repoFiles?name=${props.name}`);
+        }}
+      >
         <h3>{props.name}</h3>
       </ListItem>
     );
@@ -82,13 +92,13 @@ const UserRepos = () => {
           iconEnd={<SearchIcon />}
           style={{ width: "100%", margin: "20px" }}
         />
-        {
-          <List>
-            {repositories.map((element) => (
-              <ItemStyled props={element} />
-            ))}
-          </List>
-        }
+        <List>
+          {repositories.map((element) => (
+            <ItemStyled props={element} key={element.id}>
+              {element.name}
+            </ItemStyled>
+          ))}
+        </List>
       </Box>
     </Box>
   );

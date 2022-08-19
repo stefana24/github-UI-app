@@ -8,6 +8,7 @@ const fetchUserRepo = createAsyncThunk(
     );
     const result = await response.json();
 
+    // console.log(result);
     if (result.length > 0) {
       return result;
     }
