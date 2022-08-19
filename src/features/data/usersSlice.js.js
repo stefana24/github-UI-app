@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchUsers } from "../reducers/fetchUsers";
 import fetchUserRepo from "../reducers/fetchUserRepo";
-
 export const usersSlice = createSlice({
   name: "user",
   initialState: {
@@ -10,14 +9,10 @@ export const usersSlice = createSlice({
     loading: false,
     users: [],
     error: "",
-    filterInput: "",
   },
   reducers: {
     changeInputValue(state, action) {
       state.inputValue = action.payload;
-    },
-    changeFilterInput(state, action) {
-      state.filterInput = action.payload;
     },
   },
   extraReducers: (builder) => {
