@@ -40,7 +40,9 @@ const RepoFilesList = () => {
       </nav>
 
       <Stack direction="row" spacing={2}>
-        {/* {Object.entries(languages).forEach((val) => console.log(val))} */}
+        {/* {Object.entries(languages).forEach((val, key) => (
+          <Box> {val} test</Box>
+        ))} */}
       </Stack>
     </Box>
   );
