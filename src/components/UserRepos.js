@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import fetchUserRepo from "../features/reducers/fetchUserRepo";
-import fetchRepoFiles from "../features/reducers/fetchRepoFiles";
 
 import { changeFilterInput } from "../features/data/usersSlice";
 import { getFilteredRepos } from "../features/selectors/filterRepos";
@@ -66,14 +65,7 @@ const UserRepos = () => {
   function ItemStyled({ props }) {
     const classes = useStyles();
     return (
-      <ListItem
-        className={classes.card}
-        key={props.id}
-        onClick={() => {
-          dispatch(fetchRepoFiles({ inputValue, repoName: props.name }));
-          navigate(`/repoFiles?name=${props.name}`);
-        }}
-      >
+      <ListItem className={classes.card} key={props.id}>
         <h3>{props.name}</h3>
       </ListItem>
     );
