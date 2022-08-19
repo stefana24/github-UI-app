@@ -1,17 +1,11 @@
-import { Modal, Typography, Box } from "@mui/material";
-import Timeline from "@mui/lab/Timeline";
-import TimelineItem from "@mui/lab/TimelineItem";
-import TimelineSeparator from "@mui/lab/TimelineSeparator";
-import TimelineConnector from "@mui/lab/TimelineConnector";
-import TimelineContent from "@mui/lab/TimelineContent";
-import TimelineDot from "@mui/lab/TimelineDot";
+import { Modal, Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
 function ReposTimeline({ modal, setModal }) {
   const { userRepos } = useSelector((state) => state);
-  console.log(userRepos);
+
   return (
     <Modal
       sx={{

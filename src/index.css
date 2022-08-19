@@ -4,6 +4,10 @@
   margin:0;
   padding:0;
 }
+.app {
+  font-family: sans-serif;
+  text-align: center;
+}
 
 /* repos timeline */
 
