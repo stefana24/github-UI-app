@@ -6,19 +6,23 @@ import { Box, TextField } from "@mui/material";
 import Image from "../../images/GitHub.jpg";
 import { makeStyles } from "@mui/styles";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
-import InputAdornment from "@mui/material/InputAdornment";
+import fetchUserRepo from "../../features/reducers/fetchUserRepo";
 
 const Homepage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userInput = useSelector((state) => state);
+  const { inputValue } = useSelector((state) => state);
 
   const handleChange = (event) => {
     dispatch(changeInputValue(event.target.value));
   };
 
   const navigateToUserPage = () => {
-    navigate(`/${userInput.inputValue}`);
+    dispatch(fetchUserRepo(inputValue))
+      .unwrap()
+      .then((result) => {
+        result.length !== 0 ? navigate(`/${inputValue}`) : navigate(`/404`);
+      });
   };
 
   const useStyles = makeStyles({
@@ -76,7 +80,7 @@ const Homepage = () => {
           color="primary"
           type="text"
           onChange={handleChange}
-          value={userInput.inputValue}
+          value={inputValue}
         />
         <ButtonStyled />
       </Box>

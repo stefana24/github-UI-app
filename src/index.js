@@ -9,6 +9,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UsersListing from "./components/UsersListing";
 import UserRepos from "./components/UserRepos";
 import RepoFilesList from "./components/RepoFilesList";
+import NotFound from "./components/pages/NotFound";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -20,6 +21,7 @@ root.render(
           <Route path="/:login" element={<UserRepos />} />
           <Route path="/users" element={<UsersListing />} />
           <Route path="/repoFiles" element={<RepoFilesList />} />
+          <Route path="/404" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </PersistGate>

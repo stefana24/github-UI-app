@@ -1,7 +1,7 @@
 import { createSelector } from "@reduxjs/toolkit";
 
 export const getFilteredRepos = createSelector(
-  (state) => state.userRepos,
+  (state) => state,
   (state, input) => input,
   (repos, input) => {
     return repos.filter((item) =>

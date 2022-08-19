@@ -1,34 +1,40 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import fetchUserRepo from "../features/reducers/fetchUserRepo";
 import fetchRepoFiles from "../features/reducers/fetchRepoFiles";
 
-import { changeFilterInput } from "../features/data/usersSlice.js";
+import { changeFilterInput } from "../features/data/usersSlice";
 import { getFilteredRepos } from "../features/selectors/filterRepos";
 
-import { Box, TextField, List, ListItem } from "@mui/material";
+import { Box, TextField, List, ListItem, Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import InputAdornment from "@mui/material/InputAdornment";
 
 import { makeStyles } from "@mui/styles";
+import ReposTimeline from "./Timeline";
 
 const UserRepos = () => {
   const navigate = useNavigate();
-  const { filterInput, inputValue } = useSelector((state) => state);
+  const { inputValue } = useSelector((state) => state);
+  const { userReposContent, loading } = useSelector((state) => state.userRepos);
   const dispatch = useDispatch();
+  const [filterInput, setFilterInput] = useState("");
+  const [modal, setModal] = useState(false);
   const repositories = useSelector((state) =>
-    getFilteredRepos(state, filterInput)
+    getFilteredRepos(userReposContent, filterInput)
   );
+
   useEffect(() => {
     dispatch(fetchUserRepo(inputValue));
   }, []);
 
+  console.log(userReposContent);
   const IconTextField = ({ iconEnd, InputProps, ...props }) => {
     return (
       <TextField
         type="text"
-        onChange={(e) => dispatch(changeFilterInput(e.target.value))}
+        onChange={(e) => setFilterInput(e.target.value)}
         defaultValue={filterInput}
         {...props}
         InputProps={{
@@ -92,6 +98,14 @@ const UserRepos = () => {
           iconEnd={<SearchIcon />}
           style={{ width: "100%", margin: "20px" }}
         />
+
+        <Button
+          variant={"outlined"}
+          sx={{ marginLeft: "1rem" }}
+          onClick={() => setModal(true)}
+        >
+          Generate Timeline
+        </Button>
         <List>
           {repositories.map((element) => (
             <ItemStyled props={element} key={element.id}>
@@ -100,6 +114,7 @@ const UserRepos = () => {
           ))}
         </List>
       </Box>
+      <ReposTimeline modal={modal} setModal={setModal} />
     </Box>
   );
 };

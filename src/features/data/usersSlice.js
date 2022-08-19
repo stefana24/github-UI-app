@@ -12,22 +12,17 @@ export const usersSlice = createSlice({
       userReposContent: [],
     },
     inputValue: "",
-    users: [
-      {
-        loading: false,
-        error: "",
-        usersContent: [],
-      },
-    ],
+    users: {
+      loading: false,
+      error: "",
+      usersContent: [],
+    },
     filterInput: "",
     repoFiles: { loading: false, repoContent: [] },
   },
   reducers: {
     changeInputValue(state, action) {
       state.inputValue = action.payload;
-    },
-    changeFilterInput(state, action) {
-      state.filterInput = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -46,9 +41,10 @@ export const usersSlice = createSlice({
     });
 
     builder.addCase(fetchUserRepo.fulfilled, (state, action) => {
-      state.userRepos.userReposContent = action.payload.map(({ id, name }) => {
+      let newArr = [...action.payload].map(({ id, name }) => {
         return { id, name };
       });
+      state.userRepos.userReposContent = newArr;
     });
     builder.addCase(fetchRepoFiles.pending, (state) => {
       state.repoFiles.loading = true;
