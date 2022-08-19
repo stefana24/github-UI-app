@@ -18,9 +18,6 @@ export const usersSlice = createSlice({
     changeInputValue(state, action) {
       state.inputValue = action.payload;
     },
-    changeFilterInput(state, action) {
-      state.filterInput = action.payload;
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchUsers.pending, (state) => {
