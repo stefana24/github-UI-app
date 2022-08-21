@@ -12,7 +12,10 @@ export const usersSlice = createSlice({
     users: [],
     error: "",
     filterInput: "",
-    repoFiles: { loading: false, repoContent: [] },
+    repoFiles: {
+      loading: false,
+      repoContent: [],
+    },
   },
   reducers: {
     changeInputValue(state, action) {

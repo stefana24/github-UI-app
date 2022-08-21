@@ -6,6 +6,7 @@ const fetchRepoFiles = createAsyncThunk(
     const repoData = [
       `https://api.github.com/repos/${inputValue}/${repoName}/contents/`,
       `https://api.github.com/repos/${inputValue}/${repoName}/languages`,
+      `https://raw.githubusercontent.com/ozh/github-colors/master/colors.json`,
     ];
 
     const result = await Promise.all(
