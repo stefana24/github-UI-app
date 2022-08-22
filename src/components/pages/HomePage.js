@@ -84,6 +84,13 @@ const Homepage = () => {
         />
         <ButtonStyled />
       </Box>
+      <Button
+        sx={{ marginTop: "2rem" }}
+        variant="outlined"
+        onClick={() => navigate("/convert")}
+      >
+        Convert
+      </Button>
     </Box>
   );
 };

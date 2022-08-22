@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchUsers } from "../reducers/fetchUsers";
 import fetchUserRepo from "../reducers/fetchUserRepo";
+import fetchRepoFiles from "../reducers/fetchRepoFiles";
+import convertCode from "../reducers/convertCode";
 
 export const usersSlice = createSlice({
   name: "user",
@@ -19,14 +21,18 @@ export const usersSlice = createSlice({
       },
     ],
     filterInput: "",
-    repoFiles: {
-      loading: false,
-      repoContent: [],
+    repoFiles: { loading: false, repoContent: [] },
+    codeConvert: {
+      inputValue: "",
+      htmlCode: "",
     },
   },
   reducers: {
     changeInputValue(state, action) {
       state.inputValue = action.payload;
+    },
+    changeTextareaInput(state, action) {
+      state.codeConvert.inputValue = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -36,6 +42,7 @@ export const usersSlice = createSlice({
     builder.addCase(fetchUsers.fulfilled, (state, action) => {
       state.users.loading = false;
       state.users.usersContent = action.payload;
+      console.log("payload: ", action.payload);
       state.users.error = "";
     });
     builder.addCase(fetchUsers.rejected, (state, action) => {
@@ -49,9 +56,19 @@ export const usersSlice = createSlice({
         return { id, name };
       });
     });
+    builder.addCase(fetchRepoFiles.pending, (state) => {
+      state.repoFiles.loading = true;
+    });
+    builder.addCase(fetchRepoFiles.fulfilled, (state, action) => {
+      state.repoFiles.repoContent = action.payload;
+      state.repoFiles.loading = false;
+    });
+    builder.addCase(convertCode.fulfilled, (state, action) => {
+      state.codeConvert.htmlCode = action.payload;
+    });
   },
 });
 
 export default usersSlice.reducer;
 
-export const { changeInputValue, changeFilterInput } = usersSlice.actions;
+export const { changeInputValue, changeTextareaInput } = usersSlice.actions;

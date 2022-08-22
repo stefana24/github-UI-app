@@ -4,15 +4,13 @@ import { useNavigate } from "react-router-dom";
 
 import fetchUserRepo from "../features/reducers/fetchUserRepo";
 import fetchRepoFiles from "../features/reducers/fetchRepoFiles";
-import { changeFilterInput } from "../features/data/usersSlice";
 import { getFilteredRepos } from "../features/selectors/filterRepos";
-
 import { Box, TextField, List, ListItem, Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import InputAdornment from "@mui/material/InputAdornment";
-
 import { makeStyles } from "@mui/styles";
 import ReposTimeline from "./Timeline";
+import { useParams } from "react-router";
 
 const UserRepos = () => {
   const navigate = useNavigate();
@@ -25,31 +23,20 @@ const UserRepos = () => {
     getFilteredRepos(userReposContent, filterInput)
   );
 
+  const params = useParams();
+  console.log(params);
   useEffect(() => {
-    dispatch(fetchUserRepo(inputValue));
+    dispatch(fetchUserRepo(params.login))
+      .unwrap()
+      .then((result) => {
+        result.length !== 0 ? navigate(`/${params.login}`) : navigate(`/404`);
+      });
   }, []);
-
-  console.log(userReposContent);
-  const IconTextField = ({ iconEnd, InputProps, ...props }) => {
-    return (
-      <TextField
-        type="text"
-        onChange={(e) => setFilterInput(e.target.value)}
-        defaultValue={filterInput}
-        {...props}
-        InputProps={{
-          ...InputProps,
-          endAdornment: iconEnd ? (
-            <InputAdornment position="end">{iconEnd}</InputAdornment>
-          ) : null,
-        }}
-      />
-    );
-  };
 
   const useStyles = makeStyles({
     card: {
       color: "#218bff",
+      cursor: "pointer",
       margin: "20px",
       paddingTop: "24px",
       paddingBottom: "24px",
@@ -63,6 +50,11 @@ const UserRepos = () => {
     },
   });
 
+  const inputProps = {
+    label: "Find a repository",
+    style: { width: "100%", margin: "20px" },
+  };
+
   function ItemStyled({ props }) {
     const classes = useStyles();
     return (
@@ -71,7 +63,7 @@ const UserRepos = () => {
         key={props.id}
         onClick={() => {
           dispatch(fetchRepoFiles({ inputValue, repoName: props.name }));
-          navigate(`/repoFiles?name=${props.name}`);
+          navigate(`/${params.login}/repoFiles?name=${props.name}`);
         }}
       >
         <h3>{props.name}</h3>
@@ -93,12 +85,17 @@ const UserRepos = () => {
           width: "60vw",
         }}
       >
-        <IconTextField
-          label="Find a repository"
-          iconEnd={<SearchIcon />}
-          style={{ width: "100%", margin: "20px" }}
+        <TextField
+          type="text"
+          defaultValue={filterInput}
+          onChange={(e) => setFilterInput(e.target.value)}
+          {...inputProps}
+          InputProps={{
+            endAdornment: <SearchIcon /> ? (
+              <InputAdornment position="end">{<SearchIcon />}</InputAdornment>
+            ) : null,
+          }}
         />
-
         <Button
           variant={"outlined"}
           sx={{ marginLeft: "1rem" }}

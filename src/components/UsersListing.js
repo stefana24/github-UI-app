@@ -4,10 +4,13 @@ import { fetchUsers } from "../features/reducers/fetchUsers";
 import { getFilteredUsers } from "../features/selectors/filterUsers";
 import { Box, TextField } from "@mui/material";
 const UsersListing = () => {
-  const { usersContent, loading, error } = useSelector((state) => state.users);
+  const { usersContent, loading, error } = useSelector(
+    (state) => state.users[0]
+  );
+
+  console.log(usersContent);
   const dispatch = useDispatch();
   const [filterInput, setFilterInput] = useState("");
-
   const filteredUsers = useSelector(() =>
     getFilteredUsers(usersContent, filterInput)
   );

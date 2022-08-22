@@ -9,9 +9,7 @@ const ProgLanguages = () => {
   const { repoContent, loading } = useSelector((state) => state.repoFiles);
   const [, languages, gitColors] = repoContent;
 
-  const percentageArr = languages
-    ? Object.entries(languages).map(([, percent]) => percent)
-    : [];
+  const percentageArr = Object.entries(languages).map(([, percent]) => percent);
   return (
     <>
       {loading === false ? (
@@ -40,57 +38,58 @@ const ProgLanguages = () => {
                 flexWrap: "wrap",
                 marginBottom: "0.5rem",
               }}
-            />
-            {loading === false
-              ? Object.entries(languages).map(([languageName, percent]) => (
-                  <Box key={languageName}>
-                    <Box
-                      sx={{
-                        marginLeft: "1rem",
-                        display: "flex",
-                      }}
-                    >
-                      {" "}
+            >
+              {loading === false
+                ? Object.entries(languages).map(([languageName, percent]) => (
+                    <Box key={languageName}>
                       <Box
                         sx={{
-                          background: gitColors[languageName].color,
-                          width: "0.5rem",
-                          height: "0.5rem",
-                          borderRadius: "50%",
-                          alignSelf: "center",
-                          marginRight: "0.5rem",
+                          marginLeft: "1rem",
+                          display: "flex",
                         }}
-                      ></Box>
-                      {`${languageName}: ${calculatePercentage(
-                        percent,
-                        percentageArr
-                      ).toFixed(2)}%`}
+                      >
+                        {" "}
+                        <Box
+                          sx={{
+                            background: gitColors[languageName].color,
+                            width: "0.5rem",
+                            height: "0.5rem",
+                            borderRadius: "50%",
+                            alignSelf: "center",
+                            marginRight: "0.5rem",
+                          }}
+                        ></Box>
+                        {`${languageName}: ${calculatePercentage(
+                          percent,
+                          percentageArr
+                        ).toFixed(2)}%`}
+                      </Box>
                     </Box>
-                  </Box>
-                ))
-              : null}
-          </Box>
+                  ))
+                : null}
+            </Box>
 
-          {/* language color bar */}
+            {/* language color bar */}
 
-          <Box
-            sx={{
-              height: "0.5rem",
-              width: "100%",
-              display: "flex",
-              justifyContent: "flex-end",
-            }}
-          >
-            {Object.entries(languages).map(([languageName, percent], i) => (
-              <Box
-                key={languageName}
-                sx={{
-                  background: gitColors[languageName].color,
-                  width: `${calculatePercentage(percent, percentageArr)}%`,
-                  height: "100%",
-                }}
-              ></Box>
-            ))}
+            <Box
+              sx={{
+                height: "0.5rem",
+                width: "100%",
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+            >
+              {Object.entries(languages).map(([languageName, percent], i) => (
+                <Box
+                  key={languageName}
+                  sx={{
+                    background: gitColors[languageName].color,
+                    width: `${calculatePercentage(percent, percentageArr)}%`,
+                    height: "100%",
+                  }}
+                ></Box>
+              ))}
+            </Box>
           </Box>
         </Box>
       ) : null}
