@@ -3,14 +3,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import fetchUserRepo from "../features/reducers/fetchUserRepo";
 import fetchRepoFiles from "../features/reducers/fetchRepoFiles";
-
-import { changeFilterInput } from "../features/data/usersSlice.js";
 import { getFilteredRepos } from "../features/selectors/filterRepos";
-
 import { Box, TextField, List, ListItem, Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import InputAdornment from "@mui/material/InputAdornment";
-
 import { makeStyles } from "@mui/styles";
 import ReposTimeline from "./Timeline";
 
@@ -28,26 +24,10 @@ const UserRepos = () => {
     dispatch(fetchUserRepo(inputValue));
   }, []);
 
-  const IconTextField = ({ iconEnd, InputProps, ...props }) => {
-    return (
-      <TextField
-        type="text"
-        onChange={(e) => setFilterInput(e.target.value)}
-        defaultValue={filterInput}
-        {...props}
-        InputProps={{
-          ...InputProps,
-          endAdornment: iconEnd ? (
-            <InputAdornment position="end">{iconEnd}</InputAdornment>
-          ) : null,
-        }}
-      />
-    );
-  };
-
   const useStyles = makeStyles({
     card: {
       color: "#218bff",
+      cursor: "pointer",
       margin: "20px",
       paddingTop: "24px",
       paddingBottom: "24px",
@@ -60,6 +40,11 @@ const UserRepos = () => {
       },
     },
   });
+
+  const inputProps = {
+    label: "Find a repository",
+    style: { width: "100%", margin: "20px" },
+  };
 
   function ItemStyled({ props }) {
     const classes = useStyles();
@@ -91,12 +76,17 @@ const UserRepos = () => {
           width: "60vw",
         }}
       >
-        <IconTextField
-          label="Find a repository"
-          iconEnd={<SearchIcon />}
-          style={{ width: "100%", margin: "20px" }}
+        <TextField
+          type="text"
+          defaultValue={filterInput}
+          onChange={(e) => setFilterInput(e.target.value)}
+          {...inputProps}
+          InputProps={{
+            endAdornment: <SearchIcon /> ? (
+              <InputAdornment position="end">{<SearchIcon />}</InputAdornment>
+            ) : null,
+          }}
         />
-
         <Button
           variant={"outlined"}
           sx={{ marginLeft: "1rem" }}

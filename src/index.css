@@ -123,3 +123,15 @@
   font-style: italic;
   line-height: 1.5em;
 }
+
+
+/* convert code */
+
+.codeContainer{
+  resize:none;
+  display:block;
+  width:50%;
+  outline:none;
+  font-family:'Open Sans';
+  padding:10px;
+}
