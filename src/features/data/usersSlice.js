@@ -19,6 +19,10 @@ export const usersSlice = createSlice({
       },
     ],
     filterInput: "",
+    repoFiles: {
+      loading: false,
+      repoContent: [],
+    },
   },
   reducers: {
     changeInputValue(state, action) {
