@@ -1,28 +1,36 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchUsers } from "../features/reducers/fetchUsers";
+import { Box, TextField } from "@mui/material";
+import { getFilteredUsers } from "../features/selectors/filterUsers";
 
 const UsersListing = () => {
-  const user = useSelector((state) => state);
+  const user = useSelector((state) => state.users);
+  const loading = useSelector((state) => state.loading);
+  const error = useSelector((state) => state.error);
   const dispatch = useDispatch();
-
+  const [filterInput, setFilterInput] = useState("");
+  const filteredUsers = useSelector(() => getFilteredUsers(user, filterInput));
   useEffect(() => {
     dispatch(fetchUsers());
   }, []);
   return (
-    <div>
-      {user.loading && <div>Loading..</div>}
-      {!user.loading && user.error ? <div>Error:{user.error}</div> : null}
+    <Box>
+      <TextField
+        type="text"
+        onChange={(e) => setFilterInput(e.target.value)}
+        defaultValue={filterInput}
+      />
+      {loading && <div>Loading..</div>}
+      {!loading && error ? <div>Error:{user.error}</div> : null}
       {
         <ul>
-          {user.users.map((element) => (
-            <li  key={element.id}>
-              {element.login}
-            </li>
+          {filteredUsers.map((element) => (
+            <li key={element.id}>{element.login}</li>
           ))}
         </ul>
       }
-    </div>
+    </Box>
   );
 };
 
