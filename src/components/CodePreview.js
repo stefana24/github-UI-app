@@ -16,7 +16,7 @@ function CodePreview() {
       <Box
         sx={{
           width: "100%",
-          minHeight: "70vh",
+          minHeight: "600px",
           display: "flex",
         }}
       >
@@ -28,19 +28,37 @@ function CodePreview() {
           className="codeContainer"
         ></textarea>
         <Box
-          sx={{ width: "50%" }}
+          sx={{
+            width: "50%",
+            fontFamily: "Open Sans",
+            padding: "10px",
+            border: "1px solid black",
+            height: "600px",
+            overflowY: "scroll",
+            paddingLeft: "2rem",
+          }}
           dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(htmlCode) }}
         />
       </Box>
-      <Button
-        sx={{ marginTop: "2rem" }}
-        variant={"outlined"}
-        onClick={() => {
-          dispatch(convertCode(inputValue));
-        }}
-      >
-        Convert
-      </Button>
+      <Box sx={{ marginTop: "2rem", textAlign: "center" }}>
+        <Button
+          variant={"outlined"}
+          onClick={() => {
+            dispatch(convertCode(inputValue));
+          }}
+        >
+          Convert Code
+        </Button>
+        <Button
+          variant={"outlined"}
+          sx={{ marginLeft: "2rem" }}
+          onClick={() => {
+            navigator.clipboard.writeText(htmlCode);
+          }}
+        >
+          Copy HTML
+        </Button>
+      </Box>
     </>
   );
 }

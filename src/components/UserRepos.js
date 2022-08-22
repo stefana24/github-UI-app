@@ -10,6 +10,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import InputAdornment from "@mui/material/InputAdornment";
 import { makeStyles } from "@mui/styles";
 import ReposTimeline from "./Timeline";
+import UserProfile from "./UserProfile";
 
 const UserRepos = () => {
   const navigate = useNavigate();
@@ -88,13 +89,8 @@ const UserRepos = () => {
             ) : null,
           }}
         />
-        <Button
-          variant={"outlined"}
-          sx={{ marginLeft: "1rem" }}
-          onClick={() => setModal(true)}
-        >
-          Generate Timeline
-        </Button>
+        <UserProfile setModal={setModal} />
+
         <List>
           {repositories.map((element) => (
             <ItemStyled props={element} key={element.id}>
