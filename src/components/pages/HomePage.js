@@ -36,6 +36,7 @@ const Homepage = () => {
     const classes = useStyles();
     return (
       <Button
+        sx={{ marginLeft: "1rem" }}
         className={classes.root}
         startIcon={<PersonSearchIcon />}
         onClick={navigateToUserPage}
@@ -85,7 +86,7 @@ const Homepage = () => {
         variant="outlined"
         onClick={() => navigate("/convert")}
       >
-        Convert
+        HTML Viewer
       </Button>
     </Box>
   );

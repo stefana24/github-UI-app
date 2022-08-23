@@ -16,9 +16,7 @@ const UsersListing = () => {
       {
         <ul>
           {user.users.map((element) => (
-            <li  key={element.id}>
-              {element.login}
-            </li>
+            <li key={element.id}>{element.login}</li>
           ))}
         </ul>
       }
