@@ -9,7 +9,10 @@ const ProgLanguages = () => {
   const { repoContent, loading } = useSelector((state) => state.repoFiles);
   const [, languages, gitColors] = repoContent;
 
-  const percentageArr = Object.entries(languages).map(([, percent]) => percent);
+  const percentageArr =
+    repoContent.length > 0
+      ? Object.entries(languages).map(([, percent]) => percent)
+      : null;
   return (
     <>
       {loading === false ? (
