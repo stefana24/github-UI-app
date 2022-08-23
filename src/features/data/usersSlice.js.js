@@ -12,7 +12,6 @@ export const usersSlice = createSlice({
     loading: false,
     users: [],
     error: "",
-    filterInput: "",
     repoFiles: { loading: false, repoContent: [] },
     codeConvert: {
       inputValue: "",
