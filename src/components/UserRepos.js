@@ -10,6 +10,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import InputAdornment from "@mui/material/InputAdornment";
 import { makeStyles } from "@mui/styles";
 import ReposTimeline from "./Timeline";
+import { useParams } from "react-router";
 import UserProfile from "./UserProfile";
 
 const UserRepos = () => {
@@ -22,8 +23,13 @@ const UserRepos = () => {
     getFilteredRepos(state, filterInput)
   );
 
+  const params = useParams();
   useEffect(() => {
-    dispatch(fetchUserRepo(inputValue));
+    dispatch(fetchUserRepo(params.login))
+      .unwrap()
+      .then((result) => {
+        result.length !== 0 ? navigate(`/${params.login}`) : navigate(`/404`);
+      });
   }, []);
 
   const useStyles = makeStyles({
@@ -56,7 +62,7 @@ const UserRepos = () => {
         key={props.id}
         onClick={() => {
           dispatch(fetchRepoFiles({ inputValue, repoName: props.name }));
-          navigate(`/repoFiles?name=${props.name}`);
+          navigate(`/${params.login}/repoFiles?name=${props.name}`);
         }}
       >
         <h3>{props.name}</h3>
