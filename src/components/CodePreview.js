@@ -4,12 +4,16 @@ import DOMPurify from "dompurify";
 import { useDispatch, useSelector } from "react-redux";
 import convertCode from "../features/reducers/convertCode";
 import { changeTextareaInput } from "../features/data/usersSlice.js";
+import { useNavigate } from "react-router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 function CodePreview() {
   const dispatch = useDispatch();
   const {
     codeConvert: { inputValue, htmlCode },
   } = useSelector((state) => state);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -20,6 +24,20 @@ function CodePreview() {
           display: "flex",
         }}
       >
+        <Button
+          sx={{ position: "absolute", right: "20px", top: "20px" }}
+          variant="outlined"
+          onClick={() => {
+            localStorage.removeItem("Auth Token");
+            navigate("/login");
+          }}
+        >
+          Logout
+          <FontAwesomeIcon
+            style={{ marginLeft: "0.5rem" }}
+            icon={faRightFromBracket}
+          />
+        </Button>
         <textarea
           defaultValue={inputValue}
           onChange={(e) => {

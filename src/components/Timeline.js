@@ -10,7 +10,7 @@ function ReposTimeline({ modal, setModal }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useParams();
-  console.log(user);
+
   return (
     <Modal
       sx={{

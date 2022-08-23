@@ -11,6 +11,10 @@ import UserRepos from "./components/UserRepos";
 import RepoFilesList from "./components/RepoFilesList";
 import NotFound from "./components/pages/NotFound";
 import CodePreview from "./components/CodePreview";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import ResetPassword from "./components/ResetPassword";
+import PrivateRoute from "./components/pages/PrivateRoutes";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -18,12 +22,50 @@ root.render(
     <PersistGate loading={null} persistor={persistor}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<App />}></Route>
-          <Route path="/:login" element={<UserRepos />} />
-          <Route path="/users" element={<UsersListing />} />
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <App />
+              </PrivateRoute>
+            }
+          ></Route>
+          <Route
+            path="/:login"
+            element={
+              <PrivateRoute>
+                <UserRepos />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/users"
+            element={
+              <PrivateRoute>
+                <UsersListing />
+              </PrivateRoute>
+            }
+          />
           <Route path="/404" element={<NotFound />} />
-          <Route path=":login/repoFiles" element={<RepoFilesList />} />
-          <Route path="/convert" element={<CodePreview />} />
+          <Route
+            path=":login/repoFiles"
+            element={
+              <PrivateRoute>
+                <RepoFilesList />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/convert"
+            element={
+              <PrivateRoute>
+                <CodePreview />
+              </PrivateRoute>
+            }
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/resetPassword" element={<ResetPassword />} />
         </Routes>
       </BrowserRouter>
     </PersistGate>
