@@ -4,54 +4,60 @@ import DOMPurify from "dompurify";
 import { useDispatch, useSelector } from "react-redux";
 import convertCode from "../features/reducers/convertCode";
 import { changeTextareaInput } from "../features/data/usersSlice.js";
+import { useNavigate } from "react-router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { useRef } from "react";
+import { useStyles } from "./styles/codePreviewStyles";
 
 function CodePreview() {
   const dispatch = useDispatch();
   const {
     codeConvert: { inputValue, htmlCode },
   } = useSelector((state) => state);
+  const textAreaInput = useRef("");
+  const navigate = useNavigate();
+  const classes = useStyles();
 
   return (
     <>
-      <Box
-        sx={{
-          width: "100%",
-          minHeight: "600px",
-          display: "flex",
+      <Button
+        sx={{ margin: "auto", display: "block", marginTop: "1rem" }}
+        variant="outlined"
+        onClick={() => {
+          localStorage.removeItem("Auth Token");
+          navigate("/login");
         }}
       >
+        Logout
+        <FontAwesomeIcon
+          style={{ marginLeft: "0.5rem" }}
+          icon={faRightFromBracket}
+        />
+      </Button>
+      <Box className={classes.previewContainer}>
         <textarea
           defaultValue={inputValue}
-          onChange={(e) => {
-            dispatch(changeTextareaInput(e.target.value));
-          }}
+          ref={textAreaInput}
           className="codeContainer"
         ></textarea>
         <Box
-          sx={{
-            width: "50%",
-            fontFamily: "Open Sans",
-            padding: "10px",
-            border: "1px solid black",
-            height: "600px",
-            overflowY: "scroll",
-            paddingLeft: "2rem",
-          }}
+          className={classes.htmlContainer}
           dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(htmlCode) }}
         />
       </Box>
-      <Box sx={{ marginTop: "2rem", textAlign: "center" }}>
+      <Box className={classes.btnsContainer}>
         <Button
           variant={"outlined"}
           onClick={() => {
-            dispatch(convertCode(inputValue));
+            dispatch(changeTextareaInput(textAreaInput.current.value));
+            dispatch(convertCode(textAreaInput.current.value));
           }}
         >
           Convert Code
         </Button>
         <Button
           variant={"outlined"}
-          sx={{ marginLeft: "2rem" }}
           onClick={() => {
             navigator.clipboard.writeText(htmlCode);
           }}

@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import fetchUserRepo from "../features/reducers/fetchUserRepo";
 import fetchRepoFiles from "../features/reducers/fetchRepoFiles";
 import { getFilteredRepos } from "../features/selectors/filterRepos";
@@ -22,13 +23,15 @@ const UserRepos = () => {
   const repositories = useSelector((state) =>
     getFilteredRepos(state, filterInput)
   );
-
   const params = useParams();
+
   useEffect(() => {
     dispatch(fetchUserRepo(params.login))
       .unwrap()
       .then((result) => {
-        result.length !== 0 ? navigate(`/${params.login}`) : navigate(`/404`);
+        if (result.length === 0) {
+          navigate("/404");
+        }
       });
   }, []);
 
@@ -79,6 +82,20 @@ const UserRepos = () => {
         alignItems: "center",
       }}
     >
+      <Button
+        sx={{ marginTop: "1rem" }}
+        variant="outlined"
+        onClick={() => {
+          localStorage.removeItem("Auth Token");
+          navigate("/login");
+        }}
+      >
+        Logout
+        <FontAwesomeIcon
+          style={{ marginLeft: "0.5rem" }}
+          icon={faRightFromBracket}
+        />
+      </Button>
       <Box
         sx={{
           width: "60vw",
@@ -95,6 +112,7 @@ const UserRepos = () => {
             ) : null,
           }}
         />
+
         <UserProfile setModal={setModal} />
 
         <List>
