@@ -1,89 +1,59 @@
 import { Box, Typography, Button, Link } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getUser } from "../features/helperFunctions/fetchUser";
+
 import { useParams } from "react-router";
+import { userProfileStyles } from "./styles/userProfileStyles";
+import { fetchUserData } from "../features/reducers/fetchUserData";
 
 function UserProfile({ setModal }) {
-  const { userRepos } = useSelector((state) => state);
-  const [userData, setUserData] = useState([]);
+  const { userRepos, userData } = useSelector((state) => state);
   const user = useParams();
+  const classes = userProfileStyles();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getUser(user.login, setUserData);
+    dispatch(fetchUserData(user.login));
   }, []);
 
   return (
-    <Box sx={{ display: "flex", margin: "2rem 0" }}>
-      <Box sx={{ width: "200px" }}>
+    <Box className={classes.userProfile}>
+      <Box className={classes.avatarContainer}>
         <img
-          style={{ width: "100%", borderRadius: "20px" }}
+          className={classes.avatar}
           src={userRepos.length > 0 ? userRepos[0].owner.avatar_url : ""}
         />
       </Box>
-      <Box
-        sx={{
-          marginLeft: "2rem",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-        }}
-      >
+      <Box className={classes.userDetailsContainer}>
         <Typography sx={{ color: "#218bff", fontWeight: "bold" }}>
           {user.login}
         </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "flex-end",
-            columnGap: "20px",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <Typography sx={{ color: "#218bff", fontWeight: "bold" }}>
-              Followers
-            </Typography>
-            <Typography>
-              {userData.length > 0 ? userData[0].length : ""}
-            </Typography>
+        <Box className={classes.userDetails}>
+          <Box className={classes.followersContainer}>
+            {["Followers", "Following", "Repos"].map((item, index) => {
+              return (
+                <Box
+                  key={index}
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography sx={{ color: "#218bff", fontWeight: "bold" }}>
+                    {item}
+                  </Typography>
+                  <Typography>
+                    {item.toLowerCase() in userData
+                      ? userData[item.toLowerCase()]
+                      : userRepos.length}
+                  </Typography>
+                </Box>
+              );
+            })}
           </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <Typography sx={{ color: "#218bff", fontWeight: "bold" }}>
-              Following
-            </Typography>
-            <Typography>
-              {userData.length > 0 ? userData[1].length : ""}
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <Typography sx={{ color: "#218bff", fontWeight: "bold" }}>
-              Repos
-            </Typography>
-            <Typography>{userRepos.length}</Typography>
-          </Box>
-          <Button
-            sx={{ marginLeft: "2rem" }}
-            variant={"outlined"}
-            onClick={() => setModal(true)}
-          >
+
+          <Button variant={"outlined"} onClick={() => setModal(true)}>
             Generate Timeline
           </Button>
         </Box>

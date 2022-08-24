@@ -3,6 +3,7 @@ import { fetchUsers } from "../reducers/fetchUsers";
 import fetchUserRepo from "../reducers/fetchUserRepo";
 import fetchRepoFiles from "../reducers/fetchRepoFiles";
 import convertCode from "../reducers/convertCode";
+import { fetchUserData } from "../reducers/fetchUserData";
 
 export const usersSlice = createSlice({
   name: "user",
@@ -16,6 +17,10 @@ export const usersSlice = createSlice({
     codeConvert: {
       inputValue: "",
       htmlCode: "",
+    },
+    userData: {
+      followers: 0,
+      following: 0,
     },
   },
   reducers: {
@@ -53,6 +58,13 @@ export const usersSlice = createSlice({
     });
     builder.addCase(convertCode.fulfilled, (state, action) => {
       state.codeConvert.htmlCode = action.payload;
+    });
+    builder.addCase(fetchUserData.fulfilled, (state, action) => {
+      const { followers, following } = action.payload;
+      state.userData = {
+        followers,
+        following,
+      };
     });
   },
 });

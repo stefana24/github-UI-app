@@ -55,7 +55,7 @@ const Homepage = () => {
   return (
     <>
       <Button
-        sx={{ position: "absolute", right: "20px", top: "20px" }}
+        sx={{ marginTop: "1rem" }}
         variant="outlined"
         onClick={() => {
           localStorage.removeItem("Auth Token");

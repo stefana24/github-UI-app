@@ -15,59 +15,63 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import ResetPassword from "./components/ResetPassword";
 import PrivateRoute from "./components/pages/PrivateRoutes";
+import { ThemeProvider } from "@mui/styles";
+import { theme } from "./app/material-ui/materialUITheme";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <PrivateRoute>
-                <App />
-              </PrivateRoute>
-            }
-          ></Route>
-          <Route
-            path="/:login"
-            element={
-              <PrivateRoute>
-                <UserRepos />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/users"
-            element={
-              <PrivateRoute>
-                <UsersListing />
-              </PrivateRoute>
-            }
-          />
-          <Route path="/404" element={<NotFound />} />
-          <Route
-            path=":login/repoFiles"
-            element={
-              <PrivateRoute>
-                <RepoFilesList />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/convert"
-            element={
-              <PrivateRoute>
-                <CodePreview />
-              </PrivateRoute>
-            }
-          />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/resetPassword" element={<ResetPassword />} />
-        </Routes>
-      </BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <PrivateRoute>
+                  <App />
+                </PrivateRoute>
+              }
+            ></Route>
+            <Route
+              path="/:login"
+              element={
+                <PrivateRoute>
+                  <UserRepos />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/users"
+              element={
+                <PrivateRoute>
+                  <UsersListing />
+                </PrivateRoute>
+              }
+            />
+            <Route path="/404" element={<NotFound />} />
+            <Route
+              path=":login/repoFiles"
+              element={
+                <PrivateRoute>
+                  <RepoFilesList />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/convert"
+              element={
+                <PrivateRoute>
+                  <CodePreview />
+                </PrivateRoute>
+              }
+            />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/resetPassword" element={<ResetPassword />} />
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
     </PersistGate>
   </Provider>
 );

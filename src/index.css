@@ -36,7 +36,9 @@
 .closeBtn:hover{
   color:#2C3333;
 }
-
+.timeline-container{
+  position:relative;
+}
 .timeline{
   margin:0 auto;
   width:100%;
@@ -136,15 +138,54 @@
   line-height: 1.5em;
 }
 
+@media screen and (max-width:600px){
+ .hideScrollbar{
+    min-width:350px;
+    height:400px;
+ }
+ .container{
+  width:90%;
+ }
+ .container:nth-child(odd),.container:nth-child(even){
+    left:15%;
+}
+ .timeline::before{
+    left:15%;
+  }
+  .container:nth-child(odd) .repoName::before{
+    left:-4%;
+    border-width: 10px 10px 10px 0;
+    border-color: transparent rgb(248,248,248) transparent transparent;
+  }
+  .container:nth-child(odd)::after{
+    right: 97%;
+  }
+  .container:nth-child(odd){
+    text-align:left;
+  }
+} 
 
+@media screen and (max-width:380px){
+  .hideScrollbar{
+    min-width:250px;
+    height:400px;
+ }
+}
 /* convert code */
 
 .codeContainer{
   resize:none;
   display:block;
   width:50%;
-  height: 600px;
+  height: 550px;
   outline:none;
   font-family:'Open Sans';
   padding:10px;
+  border:1px solid black;
+}
+
+@media screen and (max-width:600px){
+  .codeContainer{
+    width:100%;
+  }
 }

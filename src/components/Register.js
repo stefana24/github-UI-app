@@ -4,11 +4,17 @@ import app from "../app/firebase/firebaseConfig";
 import Image from "../images/GitHub.jpg";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router";
+import { Navigate } from "react-router-dom";
 
 function Register() {
   const [user, setUser] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
   const navigate = useNavigate();
+  const authToken = localStorage.getItem("Auth Token");
+
+  if (authToken) {
+    return <Navigate to="/" />;
+  }
 
   async function handleSubmit() {
     const auth = getAuth();

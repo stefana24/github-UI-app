@@ -3,6 +3,7 @@ import { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router";
 import Image from "../images/GitHub.jpg";
+import { Navigate } from "react-router-dom";
 
 function Login() {
   const [user, setUser] = useState({ value: "", error: "" });
@@ -10,6 +11,11 @@ function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const auth = getAuth();
+  const authToken = localStorage.getItem("Auth Token");
+
+  if (authToken) {
+    return <Navigate to="/" />;
+  }
 
   async function handleLogin() {
     try {

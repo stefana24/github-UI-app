@@ -21,7 +21,7 @@ function ReposTimeline({ modal, setModal }) {
       open={modal}
       onClose={() => setModal(false)}
     >
-      <Box sx={{ position: "relative" }}>
+      <Box className="timeline-container">
         <Box className="hideScrollbar">
           <FontAwesomeIcon
             onClick={() => setModal(false)}
@@ -45,7 +45,10 @@ function ReposTimeline({ modal, setModal }) {
                               repoName: repo.name,
                             })
                           );
-                          navigate(`/repoFiles?name=${repo.name}`);
+
+                          navigate(
+                            `/${user.login}/repoFiles?name=${repo.name}`
+                          );
                         }}
                         className="repoName"
                       >

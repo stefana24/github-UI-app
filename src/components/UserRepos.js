@@ -24,7 +24,7 @@ const UserRepos = () => {
     getFilteredRepos(state, filterInput)
   );
   const params = useParams();
-  console.log(params);
+
   useEffect(() => {
     dispatch(fetchUserRepo(params.login))
       .unwrap()
@@ -83,7 +83,7 @@ const UserRepos = () => {
       }}
     >
       <Button
-        sx={{ position: "absolute", right: "20px", top: "20px" }}
+        sx={{ marginTop: "1rem" }}
         variant="outlined"
         onClick={() => {
           localStorage.removeItem("Auth Token");
@@ -112,6 +112,7 @@ const UserRepos = () => {
             ) : null,
           }}
         />
+
         <UserProfile setModal={setModal} />
 
         <List>

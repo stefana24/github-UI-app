@@ -3,12 +3,18 @@ import { useState } from "react";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { useNavigate } from "react-router";
 import Image from "../images/GitHub.jpg";
+import { Navigate } from "react-router-dom";
 
 function ResetPassword() {
   const [user, setUser] = useState({ value: "", error: "" });
 
   const navigate = useNavigate();
   const auth = getAuth();
+  const authToken = localStorage.getItem("Auth Token");
+
+  if (authToken) {
+    return <Navigate to="/" />;
+  }
 
   async function resetPassword() {
     if (user.value.length < 1) {

@@ -11,21 +11,7 @@ import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 const RepoFilesList = () => {
   const navigate = useNavigate();
   return (
-    <>
-      <Button
-        sx={{ position: "absolute", right: "20px", top: "20px" }}
-        variant="outlined"
-        onClick={() => {
-          localStorage.removeItem("Auth Token");
-          navigate("/login");
-        }}
-      >
-        Logout
-        <FontAwesomeIcon
-          style={{ marginLeft: "0.5rem" }}
-          icon={faRightFromBracket}
-        />
-      </Button>
+    <Box>
       <Box
         component="span"
         sx={{
@@ -38,10 +24,24 @@ const RepoFilesList = () => {
           color: "#a7b4c1",
         }}
       >
+        <Button
+          sx={{ marginTop: "1rem" }}
+          variant="outlined"
+          onClick={() => {
+            localStorage.removeItem("Auth Token");
+            navigate("/login");
+          }}
+        >
+          Logout
+          <FontAwesomeIcon
+            style={{ marginLeft: "0.5rem" }}
+            icon={faRightFromBracket}
+          />
+        </Button>
         <RepoContent />
         <ProgLanguages />
       </Box>
-    </>
+    </Box>
   );
 };
 
