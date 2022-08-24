@@ -4,7 +4,6 @@ import Image from "../images/GitHub.jpg";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router";
 import { Navigate } from "react-router-dom";
-import app from "../app/firebase/firebaseConfig";
 
 function Register() {
   const [user, setUser] = useState({ value: "", error: "" });
