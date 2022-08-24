@@ -52,16 +52,11 @@ const Homepage = () => {
   return (
     <Box
       sx={{
-        boxShadow: 2,
-        borderRadius: 7,
-        width: 3 / 4,
-        color: "",
-        minHeight: 450,
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        marginRight: "-50%",
-        transform: "translate(-50%, -50%) ",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        flexWrap: "wrap",
       }}
     >
       <img src={Image} alt="github" />
@@ -70,6 +65,7 @@ const Homepage = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          flexWrap: "wrap",
         }}
       >
         <TextField
