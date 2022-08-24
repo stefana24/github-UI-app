@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
-import { useNavigate } from "react-router";
-
 import { Box } from "@mui/material";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -24,8 +22,6 @@ const RepoContent = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const { repoContent, loading } = state.repoFiles;
-
-  const navigate = useNavigate();
 
   const [content] = repoContent;
   const username = state.inputValue;

@@ -1,6 +1,6 @@
-import { Box, Typography, Button, Link } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { useParams } from "react-router";
 import { userProfileStyles } from "./styles/userProfileStyles";
@@ -22,6 +22,7 @@ function UserProfile({ setModal }) {
         <img
           className={classes.avatar}
           src={userRepos.length > 0 ? userRepos[0].owner.avatar_url : ""}
+          alt="avatar"
         />
       </Box>
       <Box className={classes.userDetailsContainer}>

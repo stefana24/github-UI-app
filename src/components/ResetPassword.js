@@ -50,6 +50,7 @@ function ResetPassword() {
         }}
         src={Image}
         onClick={() => navigate("/")}
+        alt="GitHub"
       />
       <TextField
         name="email"

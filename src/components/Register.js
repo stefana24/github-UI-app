@@ -1,10 +1,10 @@
 import { Box, Button, TextField, FormControl } from "@mui/material";
 import { useState } from "react";
-import app from "../app/firebase/firebaseConfig";
 import Image from "../images/GitHub.jpg";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router";
 import { Navigate } from "react-router-dom";
+import app from "../app/firebase/firebaseConfig";
 
 function Register() {
   const [user, setUser] = useState({ value: "", error: "" });
@@ -70,6 +70,7 @@ function Register() {
         }}
         src={Image}
         onClick={() => navigate("/")}
+        alt="GitHub"
       />
       <FormControl sx={{ display: "flex", rowGap: "20px" }}>
         <TextField

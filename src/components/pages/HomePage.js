@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { changeInputValue } from "../../features/data/usersSlice.js";
 import Button from "@mui/material/Button";
-import { Box, TextField, IconButton } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 import Image from "../../images/GitHub.jpg";
 import { makeStyles } from "@mui/styles";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";

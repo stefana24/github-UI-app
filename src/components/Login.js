@@ -54,6 +54,7 @@ function Login() {
         }}
         src={Image}
         onClick={() => navigate("/")}
+        alt="GitHub"
       />
       <FormControl sx={{ display: "flex", rowGap: "20px" }}>
         <TextField
