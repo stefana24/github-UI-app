@@ -3,6 +3,7 @@ import { fetchUsers } from "../reducers/fetchUsers";
 import fetchUserRepo from "../reducers/fetchUserRepo";
 import fetchRepoFiles from "../reducers/fetchRepoFiles";
 import convertCode from "../reducers/convertCode";
+import { fetchChildContent } from "../reducers/fetchFolderContent";
 
 export const usersSlice = createSlice({
   name: "user",
@@ -18,6 +19,8 @@ export const usersSlice = createSlice({
       inputValue: "",
       htmlCode: "",
     },
+    //
+    childFiles: { loading: false, stateFile: [] },
   },
   reducers: {
     changeInputValue(state, action) {
@@ -54,6 +57,13 @@ export const usersSlice = createSlice({
     });
     builder.addCase(convertCode.fulfilled, (state, action) => {
       state.codeConvert.htmlCode = action.payload;
+    });
+    builder.addCase(fetchChildContent.pending, (state) => {
+      state.childFiles.loading = true;
+    });
+    builder.addCase(fetchChildContent.fulfilled, (state, action) => {
+      state.childFiles.stateFile = action.payload;
+      state.childFiles.loading = false;
     });
   },
 });
