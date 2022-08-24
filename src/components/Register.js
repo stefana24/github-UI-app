@@ -1,9 +1,10 @@
 import { Box, Button, TextField, FormControl } from "@mui/material";
 import { useState } from "react";
 import Image from "../images/GitHub.jpg";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router";
 import { Navigate } from "react-router-dom";
+import { auth } from "../app/firebase/firebaseConfig";
 
 function Register() {
   const [user, setUser] = useState({ value: "", error: "" });
@@ -16,8 +17,6 @@ function Register() {
   }
 
   async function handleSubmit() {
-    const auth = getAuth();
-
     if (user.value.length < 1) {
       setUser({ ...user, error: "Email required." });
       return;
