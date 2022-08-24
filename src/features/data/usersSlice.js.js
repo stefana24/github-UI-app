@@ -4,6 +4,7 @@ import fetchUserRepo from "../reducers/fetchUserRepo";
 import fetchRepoFiles from "../reducers/fetchRepoFiles";
 import convertCode from "../reducers/convertCode";
 import { fetchChildContent } from "../reducers/fetchFolderContent";
+import { fetchUserData } from "../reducers/fetchUserData";
 
 export const usersSlice = createSlice({
   name: "user",
@@ -13,14 +14,16 @@ export const usersSlice = createSlice({
     loading: false,
     users: [],
     error: "",
-    filterInput: "",
     repoFiles: { loading: false, repoContent: [] },
     codeConvert: {
       inputValue: "",
       htmlCode: "",
     },
-    //
     childFiles: { loading: false, stateFile: [] },
+    userData: {
+      followers: 0,
+      following: 0,
+    },
   },
   reducers: {
     changeInputValue(state, action) {
@@ -64,9 +67,15 @@ export const usersSlice = createSlice({
     builder.addCase(fetchChildContent.fulfilled, (state, action) => {
       state.childFiles.stateFile = action.payload;
       state.childFiles.loading = false;
+    })
+    builder.addCase(fetchUserData.fulfilled, (state, action) => {
+      const { followers, following } = action.payload;
+      state.userData = {
+        followers,
+        following,
+      };
     });
-  },
-});
+}});
 
 export default usersSlice.reducer;
 

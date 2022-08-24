@@ -1,10 +1,15 @@
 import { Modal, Box } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import fetchRepoFiles from "../features/reducers/fetchRepoFiles";
+import { useNavigate, useParams } from "react-router";
 
 function ReposTimeline({ modal, setModal }) {
   const { userRepos } = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useParams();
 
   return (
     <Modal
@@ -16,7 +21,7 @@ function ReposTimeline({ modal, setModal }) {
       open={modal}
       onClose={() => setModal(false)}
     >
-      <Box sx={{ position: "relative" }}>
+      <Box className="timeline-container">
         <Box className="hideScrollbar">
           <FontAwesomeIcon
             onClick={() => setModal(false)}
@@ -32,7 +37,23 @@ function ReposTimeline({ modal, setModal }) {
                 return (
                   <Box key={repo.id} className="container">
                     <Box className="content">
-                      <Box className="repoName">{repo.name}</Box>
+                      <Box
+                        onClick={() => {
+                          dispatch(
+                            fetchRepoFiles({
+                              inputValue: user.login,
+                              repoName: repo.name,
+                            })
+                          );
+
+                          navigate(
+                            `/${user.login}/repoFiles?name=${repo.name}`
+                          );
+                        }}
+                        className="repoName"
+                      >
+                        {repo.name}
+                      </Box>
                       <Box className="year">
                         {new Date(repo.created_at).toLocaleString([], {
                           month: "numeric",

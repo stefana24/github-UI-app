@@ -36,7 +36,9 @@
 .closeBtn:hover{
   color:#2C3333;
 }
-
+.timeline-container{
+  position:relative;
+}
 .timeline{
   margin:0 auto;
   width:100%;
@@ -65,16 +67,16 @@
 .container:nth-child(even){
   left:50%;
 }
-.container::before{
+.repoName::before{
   content:"";
   height: 0;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  margin-top:-15px;
   width: 0;
   z-index: 1;
   border: medium solid rgb(248,248,248);
+  transition:border-color 0.5s;
 }
 .container::after{
   content: '';
@@ -95,13 +97,13 @@
 .container:nth-child(even)::after{
   left:-10px;
 }
-.container:nth-child(odd)::before{
-  right:25px;
+.container:nth-child(odd) .repoName::before{
+  left:100%;
   border-width: 10px 0 10px 10px;
   border-color: transparent transparent transparent rgb(248,248,248);
 }
-.container:nth-child(even)::before{
-  left:25px;
+.container:nth-child(even) .repoName::before{
+  right:100%;
   border-width: 10px 10px 10px 0;
   border-color: transparent rgb(248,248,248) transparent transparent;
 }
@@ -115,6 +117,18 @@
   word-break: break-all;
   position:relative;
   z-index:5;
+  cursor: pointer;
+  transition:color 0.5s, background 0.5s;
+}
+.repoName:hover{
+  background:#218bff;
+  color:rgb(248,248,248);
+}
+.container:nth-child(even) .repoName:hover::before{
+  border-color: transparent #218bff transparent transparent;
+}
+.container:nth-child(odd) .repoName:hover::before{
+  border-color: transparent transparent transparent #218bff;
 }
 .year{
   margin: 1em 0.75em 0 0;
@@ -124,14 +138,54 @@
   line-height: 1.5em;
 }
 
+@media screen and (max-width:600px){
+ .hideScrollbar{
+    min-width:350px;
+    height:400px;
+ }
+ .container{
+  width:90%;
+ }
+ .container:nth-child(odd),.container:nth-child(even){
+    left:15%;
+}
+ .timeline::before{
+    left:15%;
+  }
+  .container:nth-child(odd) .repoName::before{
+    left:-4%;
+    border-width: 10px 10px 10px 0;
+    border-color: transparent rgb(248,248,248) transparent transparent;
+  }
+  .container:nth-child(odd)::after{
+    right: 97%;
+  }
+  .container:nth-child(odd){
+    text-align:left;
+  }
+} 
 
+@media screen and (max-width:380px){
+  .hideScrollbar{
+    min-width:250px;
+    height:400px;
+ }
+}
 /* convert code */
 
 .codeContainer{
   resize:none;
   display:block;
   width:50%;
+  height: 550px;
   outline:none;
   font-family:'Open Sans';
   padding:10px;
+  border:1px solid black;
+}
+
+@media screen and (max-width:600px){
+  .codeContainer{
+    width:100%;
+  }
 }

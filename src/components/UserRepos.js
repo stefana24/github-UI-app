@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import fetchUserRepo from "../features/reducers/fetchUserRepo";
 import fetchRepoFiles from "../features/reducers/fetchRepoFiles";
 import { getFilteredRepos } from "../features/selectors/filterRepos";
@@ -10,6 +11,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import InputAdornment from "@mui/material/InputAdornment";
 import { makeStyles } from "@mui/styles";
 import ReposTimeline from "./Timeline";
+import { useParams } from "react-router";
+import UserProfile from "./UserProfile";
 
 const UserRepos = () => {
   const navigate = useNavigate();
@@ -20,9 +23,16 @@ const UserRepos = () => {
   const repositories = useSelector((state) =>
     getFilteredRepos(state, filterInput)
   );
+  const params = useParams();
 
   useEffect(() => {
-    dispatch(fetchUserRepo(inputValue));
+    dispatch(fetchUserRepo(params.login))
+      .unwrap()
+      .then((result) => {
+        if (result.length === 0) {
+          navigate("/404");
+        }
+      });
   }, []);
 
   const useStyles = makeStyles({
@@ -55,7 +65,7 @@ const UserRepos = () => {
         key={props.id}
         onClick={() => {
           dispatch(fetchRepoFiles({ inputValue, repoName: props.name }));
-          navigate(`/repoFiles?name=${props.name}`);
+          navigate(`/${params.login}/repoFiles?name=${props.name}`);
         }}
       >
         <h3>{props.name}</h3>
@@ -72,6 +82,20 @@ const UserRepos = () => {
         alignItems: "center",
       }}
     >
+      <Button
+        sx={{ marginTop: "1rem" }}
+        variant="outlined"
+        onClick={() => {
+          localStorage.removeItem("Auth Token");
+          navigate("/login");
+        }}
+      >
+        Logout
+        <FontAwesomeIcon
+          style={{ marginLeft: "0.5rem" }}
+          icon={faRightFromBracket}
+        />
+      </Button>
       <Box
         sx={{
           width: "60vw",
@@ -88,13 +112,9 @@ const UserRepos = () => {
             ) : null,
           }}
         />
-        <Button
-          variant={"outlined"}
-          sx={{ marginLeft: "1rem" }}
-          onClick={() => setModal(true)}
-        >
-          Generate Timeline
-        </Button>
+
+        <UserProfile setModal={setModal} />
+
         <List>
           {repositories.map((element) => (
             <ItemStyled props={element} key={element.id}>
