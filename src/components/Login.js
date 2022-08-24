@@ -1,16 +1,16 @@
 import { Box, Button, TextField, FormControl, Typography } from "@mui/material";
 import { useState } from "react";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router";
 import Image from "../images/GitHub.jpg";
 import { Navigate } from "react-router-dom";
+import { auth } from "../app/firebase/firebaseConfig";
 
 function Login() {
   const [user, setUser] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const auth = getAuth();
   const authToken = localStorage.getItem("Auth Token");
 
   if (authToken) {

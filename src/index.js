@@ -18,8 +18,6 @@ import PrivateRoute from "./components/pages/PrivateRoutes";
 import { ThemeProvider } from "@mui/styles";
 import { theme } from "./app/material-ui/materialUITheme";
 
-import app from "./app/firebase/firebaseConfig";
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>

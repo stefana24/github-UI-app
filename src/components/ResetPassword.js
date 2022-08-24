@@ -1,15 +1,14 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useState } from "react";
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { sendPasswordResetEmail } from "firebase/auth";
 import { useNavigate } from "react-router";
 import Image from "../images/GitHub.jpg";
 import { Navigate } from "react-router-dom";
+import { auth } from "../app/firebase/firebaseConfig";
 
 function ResetPassword() {
   const [user, setUser] = useState({ value: "", error: "" });
-
   const navigate = useNavigate();
-  const auth = getAuth();
   const authToken = localStorage.getItem("Auth Token");
 
   if (authToken) {
