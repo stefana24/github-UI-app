@@ -7,8 +7,10 @@ import Toolbar from "@mui/material/Toolbar";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { fetchUsers } from "../features/reducers/fetchUsers";
-import { Box, List, ListItem, Typography } from "@mui/material";
+import { Box, List, ListItem, Typography, Button } from "@mui/material";
 import { getFilteredUsers } from "../features/selectors/filterUsers";
+import { useNavigate } from "react-router";
+
 const UsersListing = () => {
   const user = useSelector((state) => state.users);
   const loading = useSelector((state) => state.loading);
@@ -16,6 +18,7 @@ const UsersListing = () => {
   const dispatch = useDispatch();
   const [filterInput, setFilterInput] = useState("");
   const filteredUsers = useSelector(() => getFilteredUsers(user, filterInput));
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchUsers());
@@ -76,6 +79,7 @@ const UsersListing = () => {
             >
               Search Users
             </Typography>
+
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />
@@ -87,6 +91,16 @@ const UsersListing = () => {
                 defaultValue={filterInput}
               />
             </Search>
+            <Button
+              sx={{ color: "white", marginLeft: "0.5rem" }}
+              variant="outlined"
+              onClick={() => {
+                localStorage.removeItem("Auth Token");
+                navigate("/login");
+              }}
+            >
+              Logout
+            </Button>
           </Toolbar>
         </AppBar>
       </Box>
