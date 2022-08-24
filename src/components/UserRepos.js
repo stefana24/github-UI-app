@@ -29,9 +29,10 @@ const UserRepos = () => {
     dispatch(fetchUserRepo(params.login))
       .unwrap()
       .then((result) => {
-        if (result.length === 0) {
-          navigate("/404");
-        }
+        // if (result.length === 0) {
+        //   navigate("/404");
+        // }
+        result.length !== 0 ? navigate(`/${params.login}`) : navigate(`/404`);
       });
   }, []);
 
