@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
+import { useNavigate } from "react-router";
 
 import { Box } from "@mui/material";
 import List from "@mui/material/List";
@@ -23,6 +24,8 @@ const RepoContent = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const { repoContent, loading } = state.repoFiles;
+
+  const navigate = useNavigate();
 
   const [content] = repoContent;
   const username = state.inputValue;
@@ -54,7 +57,7 @@ const RepoContent = () => {
         sx={{ display: "flex", justifyContent: "space-between" }}
       >
         <Typography variant="h5" gutterBottom sx={{ display: "flex" }}>
-          <Link href="/:login" underline="hover">
+          <Link href={`/${username}`} underline="hover">
             {username}
           </Link>
           /
